@@ -380,7 +380,6 @@ super.initState();
   }
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context);
     return Container(
       decoration: BoxDecoration(
           image: DecorationImage(
