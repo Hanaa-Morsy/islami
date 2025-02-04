@@ -13,6 +13,8 @@ class AppAssets{
   static const String surah_details_right=  'assets/images/Mask group (1).png';
   static const String bottom_mosque=  'assets/logo/Mask group (2).png';
   static const String history=  'assets/images/Rectangle 124.png';
+  static const String hadeeth_bg=  'assets/images/HadeethBackground.png';
+
 
 
 }

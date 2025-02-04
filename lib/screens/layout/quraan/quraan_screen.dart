@@ -373,15 +373,16 @@ class _QuranScreenState extends State<QuranScreen> {
   List<int> ids = [];
   List<String> idsString = [];
 
-@override
+  @override
   void initState() {
-getHistory();
-super.initState();
+    getHistory();
+    super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-    var theme=Theme.of(context);
-    var size=MediaQuery.of(context).size;
+    var theme = Theme.of(context);
+    var size = MediaQuery.of(context).size;
     return Container(
       decoration: BoxDecoration(
           image: DecorationImage(
@@ -431,33 +432,35 @@ super.initState();
                     hintStyle: TextStyle(color: AppColors.white)),
               ),
             ),
-           if(ids.isNotEmpty) Column(
-             crossAxisAlignment: CrossAxisAlignment.start,
-             children: [
-               Padding(
-                 padding: const EdgeInsets.all(8.0),
-                 child: Text('Most Recently', style: theme.textTheme.bodySmall!
-        .copyWith(color: theme.primaryColor)),
-               ),
-               SizedBox(
-                  height: size.height*0.15,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      return HistoryCard(
-                        suraData: SuraData(
-                          suraNameAr: suraNameAr[ids[index]],
-                          suraNameEn: suraNameEn[ids[index]],
-                          index: ids[index],
-                          ayaVerses: ayaNumber[ids[index]],
-                        ),
-                      );
-                    },
-                    itemCount: ids.length,
+            if (ids.isNotEmpty)
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text('Most Recently',
+                        style: theme.textTheme.bodySmall!
+                            .copyWith(color: theme.primaryColor)),
                   ),
-                ),
-             ],
-           ),
+                  SizedBox(
+                    height: size.height * 0.15,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        return HistoryCard(
+                          suraData: SuraData(
+                            suraNameAr: suraNameAr[ids[index]],
+                            suraNameEn: suraNameEn[ids[index]],
+                            index: ids[index],
+                            ayaVerses: ayaNumber[ids[index]],
+                          ),
+                        );
+                      },
+                      itemCount: ids.length,
+                    ),
+                  ),
+                ],
+              ),
             Padding(
               padding: const EdgeInsets.only(left: 20, top: 20),
               child: Align(
@@ -526,28 +529,23 @@ super.initState();
     setState(() {});
   }
 
-  void history(int index) async{
-  if(!ids.contains(index)){
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    ids.add(index);
-    idsString.add(index.toString());
-    prefs.setStringList('history', idsString);
-    setState(() {
-
-    });
+  void history(int index) async {
+    if (!ids.contains(index)) {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      ids.add(index);
+      idsString.add(index.toString());
+      prefs.setStringList('history', idsString);
+      setState(() {});
+    }
   }
 
-  }
-  getHistory()async{
-    List<String> history=[];
+  getHistory() async {
+    List<String> history = [];
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    history=prefs.getStringList('history')??[];
-    for (int i = 0; i < history.length; i++){
-
+    history = prefs.getStringList('history') ?? [];
+    for (int i = 0; i < history.length; i++) {
       ids.add(int.parse(history[i]));
     }
-    setState(() {
-
-    });
+    setState(() {});
   }
 }
