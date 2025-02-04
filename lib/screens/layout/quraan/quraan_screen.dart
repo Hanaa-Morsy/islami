@@ -380,6 +380,8 @@ super.initState();
   }
   @override
   Widget build(BuildContext context) {
+    var theme=Theme.of(context);
+    var size=MediaQuery.of(context).size;
     return Container(
       decoration: BoxDecoration(
           image: DecorationImage(
@@ -429,23 +431,33 @@ super.initState();
                     hintStyle: TextStyle(color: AppColors.white)),
               ),
             ),
-           if(ids.isNotEmpty) SizedBox(
-              height: 120,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) {
-                  return HistoryCard(
-                    suraData: SuraData(
-                      suraNameAr: suraNameAr[ids[index]],
-                      suraNameEn: suraNameEn[ids[index]],
-                      index: ids[index],
-                      ayaVerses: ayaNumber[ids[index]],
-                    ),
-                  );
-                },
-                itemCount: ids.length,
-              ),
-            ),
+           if(ids.isNotEmpty) Column(
+             crossAxisAlignment: CrossAxisAlignment.start,
+             children: [
+               Padding(
+                 padding: const EdgeInsets.all(8.0),
+                 child: Text('Most Recently', style: theme.textTheme.bodySmall!
+        .copyWith(color: theme.primaryColor)),
+               ),
+               SizedBox(
+                  height: size.height*0.15,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      return HistoryCard(
+                        suraData: SuraData(
+                          suraNameAr: suraNameAr[ids[index]],
+                          suraNameEn: suraNameEn[ids[index]],
+                          index: ids[index],
+                          ayaVerses: ayaNumber[ids[index]],
+                        ),
+                      );
+                    },
+                    itemCount: ids.length,
+                  ),
+                ),
+             ],
+           ),
             Padding(
               padding: const EdgeInsets.only(left: 20, top: 20),
               child: Align(
