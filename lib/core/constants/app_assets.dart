@@ -16,6 +16,10 @@ class AppAssets{
   static const String hadeeth_bg=  'assets/images/HadeethBackground.png';
   static const String hadeeth_bg2=  'assets/images/HadithCardBackGround 1.png';
   static const String sebha_bg=  'assets/images/Background (2).png';
+  static const String sebha_head=  'assets/images/Mask group (3).png';
+  static const String sebha_body=  'assets/images/SebhaBody 1.png';
+
+
 
 
 }
