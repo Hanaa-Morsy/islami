@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:islami/core/theme/app_theme.dart';
+import 'package:islami/screens/layout/hadeeth/hadeeth_details.dart';
 import 'package:islami/screens/layout/layout_screen.dart';
 import 'package:islami/screens/layout/quraan/surah_details.dart';
 import 'package:islami/screens/splash/splash_screen.dart';
@@ -27,6 +28,9 @@ class MyApp extends StatelessWidget {
         },
         SurahDetails.routeName: (context) {
           return SurahDetails();
+        },
+        HadeethDetails.routeName: (context) {
+          return HadeethDetails();
         },
       },
       initialRoute: SplashScreen.routeName,

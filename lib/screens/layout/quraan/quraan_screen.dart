@@ -397,114 +397,110 @@ class _QuranScreenState extends State<QuranScreen> {
           AppColors.black,
           AppColors.black.withOpacity(.7),
         ], begin: Alignment.bottomCenter, end: Alignment(1, 0))),
-        child: Column(
-          children: [
-            Image.asset(AppAssets.homelogo),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: TextField(
-                onChanged: (value) {
-                  search(value);
-                },
-                style: TextStyle(color: AppColors.white),
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: AppColors.coffe,
-                      ),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: AppColors.coffe,
-                      ),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: AppColors.coffe),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    prefixIcon: ImageIcon(
-                      AssetImage(AppAssets.quran_icon),
-                      color: AppColors.coffe,
-                    ),
-                    hintText: 'Sura Name',
-                    hintStyle: TextStyle(color: AppColors.white)),
-              ),
-            ),
-            if (ids.isNotEmpty)
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+        child: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
+              child: Column(
                 children: [
+                  Image.asset(AppAssets.homelogo),
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text('Most Recently',
-                        style: theme.textTheme.bodySmall!
-                            .copyWith(color: theme.primaryColor)),
-                  ),
-                  SizedBox(
-                    height: size.height * 0.15,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        return HistoryCard(
-                          suraData: SuraData(
-                            suraNameAr: suraNameAr[ids[index]],
-                            suraNameEn: suraNameEn[ids[index]],
-                            index: ids[index],
-                            ayaVerses: ayaNumber[ids[index]],
-                          ),
-                        );
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: TextField(
+                      onChanged: (value) {
+                        search(value);
                       },
-                      itemCount: ids.length,
+                      style: TextStyle(color: AppColors.white),
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: AppColors.coffe,
+                            ),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: AppColors.coffe,
+                            ),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: AppColors.coffe),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          prefixIcon: ImageIcon(
+                            AssetImage(AppAssets.quran_icon),
+                            color: AppColors.coffe,
+                          ),
+                          hintText: 'Sura Name',
+                          hintStyle: TextStyle(color: AppColors.white)),
                     ),
                   ),
+                  if (ids.isNotEmpty)
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text('Most Recently',
+                              style: theme.textTheme.bodySmall!
+                                  .copyWith(color:AppColors.white)),
+                        ),
+                        SizedBox(
+                          height: size.height * 0.15,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) {
+                              return HistoryCard(
+                                suraData: SuraData(
+                                  suraNameAr: suraNameAr[ids[index]],
+                                  suraNameEn: suraNameEn[ids[index]],
+                                  index: ids[index],
+                                  ayaVerses: ayaNumber[ids[index]],
+                                ),
+                              );
+                            },
+                            itemCount: ids.length,
+                          ),
+                        ),
+                      ],
+                    ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20, top: 20),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Suras List',
+                        style: TextStyle(color: AppColors.white, fontSize: 15),
+                      ),
+                    ),
+                  ),
+
                 ],
               ),
-            Padding(
-              padding: const EdgeInsets.only(left: 20, top: 20),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'Suras List',
-                  style: TextStyle(color: AppColors.white, fontSize: 15),
+            ),
+            SliverList.builder(itemCount: 114,itemBuilder: (context, index) {
+              return surahSearchAr.isEmpty
+                  ? QuraanCard(
+                suraData: SuraData(
+                  suraNameAr: suraNameAr[index],
+                  suraNameEn: suraNameEn[index],
+                  index: index,
+                  ayaVerses: ayaNumber[index],
                 ),
-              ),
-            ),
-            Expanded(
-              child: ListView.separated(
-                  itemBuilder: (context, index) {
-                    return surahSearchAr.isEmpty
-                        ? QuraanCard(
-                            suraData: SuraData(
-                              suraNameAr: suraNameAr[index],
-                              suraNameEn: suraNameEn[index],
-                              index: index,
-                              ayaVerses: ayaNumber[index],
-                            ),
-                            onTap: history,
-                          )
-                        : QuraanCard(
-                            suraData: SuraData(
-                                suraNameAr: surahSearchAr[index],
-                                suraNameEn: surahSearchEn[index],
-                                index: surahids[index],
-                                ayaVerses: ayaNumber[index]),
-                            onTap: history,
-                          );
-                  },
-                  separatorBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Divider(
-                        color: AppColors.white,
-                      ),
-                    );
-                  },
-                  itemCount:
-                      surahSearchAr.isEmpty ? 114 : surahSearchAr.length),
-            ),
+                onTap: history,
+              )
+                  : QuraanCard(
+                suraData: SuraData(
+                    suraNameAr: surahSearchAr[index],
+                    suraNameEn: surahSearchEn[index],
+                    index: surahids[index],
+                    ayaVerses: ayaNumber[index]),
+                onTap: history,
+              );
+            },)
+
           ],
+
         ),
       ),
     );
@@ -530,13 +526,16 @@ class _QuranScreenState extends State<QuranScreen> {
   }
 
   void history(int index) async {
-    if (!ids.contains(index)) {
+    if (ids.contains(index)) {
+      ids.remove(index);
+    }
+    ids.insert(0, index);
       final SharedPreferences prefs = await SharedPreferences.getInstance();
-      ids.add(index);
+
       idsString.add(index.toString());
       prefs.setStringList('history', idsString);
       setState(() {});
-    }
+
   }
 
   getHistory() async {
