@@ -3,14 +3,25 @@ import 'package:islami/core/theme/app_theme.dart';
 import 'package:islami/screens/layout/hadeeth/hadeeth_details.dart';
 import 'package:islami/screens/layout/layout_screen.dart';
 import 'package:islami/screens/layout/quraan/surah_details.dart';
+import 'package:islami/screens/on_boarding/on_boarding.dart';
 import 'package:islami/screens/splash/splash_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  var isFirstTime=await checkFirstTime();
+  runApp( MyApp(firstTime: isFirstTime,));
+}
+
+Future<bool> checkFirstTime()async {
+  SharedPreferences sharedPreferences=await SharedPreferences.getInstance();
+ bool firstTime= await sharedPreferences.getBool('first')??true;
+ return firstTime;
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final bool firstTime;
+   MyApp({required this.firstTime});
 
   // This widget is the root of your application.
   @override
@@ -32,8 +43,11 @@ class MyApp extends StatelessWidget {
         HadeethDetails.routeName: (context) {
           return HadeethDetails();
         },
+        OnBoarding.routeName: (context) {
+          return OnBoarding();
+        },
       },
-      initialRoute: SplashScreen.routeName,
+      initialRoute:firstTime? OnBoarding.routeName:SplashScreen.routeName,
     );
   }
 }
